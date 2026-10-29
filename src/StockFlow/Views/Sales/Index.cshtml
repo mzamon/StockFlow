@@ -1,5 +1,5 @@
 @model IEnumerable<Sale>
-  @{ViewData["Title"]="Sales";}
+@{ViewData["Title"]="Sales";}
   <div class="page-heading">
     <div>
       <h1>Sales</h1>
@@ -8,8 +8,7 @@
     @if(User.IsInRole("Admin")||User.IsInRole("Manager")||User.IsInRole("StockClerk")){<a
       class="btn btn-primary"
       asp-action="Create"
-      >Record sale</a
-    >}
+      >Record sale</a>}
   </div>
   <section class="panel">
     <div class="table-wrap">
@@ -26,17 +25,19 @@
         <tbody>
           @foreach(var s in Model){
           <tr>
-            <td><strong>@s.SaleNumber</strong></td>
+            <td>
+<strong>@s.SaleNumber</strong>
+</td>
             <td>@s.SoldAt.ToLocalTime().ToString("dd MMM yyyy, HH:mm")</td>
             <td>@(s.CustomerName??"Walk-in customer")</td>
             <td>
               <strong
-                >@s.Total.ToString("C",System.Globalization.CultureInfo.GetCultureInfo("en-ZA"))</strong
-              >
+                >@s.Total.ToString("C",System.Globalization.CultureInfo.GetCultureInfo("en-ZA"))</strong>
             </td>
             <td>@s.RecordedBy</td>
           </tr>
-          }@if(!Model.Any()){
+          }
+@if(!Model.Any()){
           <tr>
             <td colspan="5">
               <div class="empty-state">No sales recorded yet.</div>

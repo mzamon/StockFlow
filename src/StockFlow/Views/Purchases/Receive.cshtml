@@ -1,3 +1,38 @@
 @model PurchaseOrder
 @{ViewData["Title"]="Receive stock";}
-<div class="page-heading"><div><h1>Receive @Model.OrderNumber</h1><p>@Model.Supplier?.Name · Current status: @Model.Status</p></div><a class="btn btn-light" asp-action="Index">Back to orders</a></div><section class="panel"><div class="table-wrap"><table><thead><tr><th>Product</th><th>SKU</th><th>Ordered</th><th>Received</th><th>Remaining</th><th>Record receipt</th></tr></thead><tbody>@foreach(var l in Model.Lines){<tr><td>@l.Product?.Name</td><td>@l.Product?.Sku</td><td>@l.QuantityOrdered</td><td>@l.QuantityReceived</td><td>@(l.QuantityOrdered-l.QuantityReceived)</td><td>@if(l.QuantityReceived<l.QuantityOrdered){<form asp-action="Receive" method="post" class="inline-form"><input type="hidden" name="id" value="@Model.Id"/><input type="hidden" name="lineId" value="@l.Id"/><input type="number" name="quantity" value="@(l.QuantityOrdered-l.QuantityReceived)" min="1" max="@(l.QuantityOrdered-l.QuantityReceived)"/><button class="btn btn-primary btn-small">Receive</button></form>}else{<span class="status status-success">Complete</span>}</td></tr>}</tbody></table></div></section>
+<div class="page-heading">
+<div>
+<h1>Receive @Model.OrderNumber</h1>
+<p>@Model.Supplier?.Name · Current status: @Model.Status</p>
+</div>
+<a class="btn btn-light" asp-action="Index">Back to orders</a>
+</div>
+<section class="panel">
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Product</th>
+<th>SKU</th>
+<th>Ordered</th>
+<th>Received</th>
+<th>Remaining</th>
+<th>Record receipt</th>
+</tr>
+</thead>
+<tbody>@foreach(var l in Model.Lines){<tr>
+<td>@l.Product?.Name</td>
+<td>@l.Product?.Sku</td>
+<td>@l.QuantityOrdered</td>
+<td>@l.QuantityReceived</td>
+<td>@(l.QuantityOrdered-l.QuantityReceived)</td>
+<td>@if(l.QuantityReceived<l.QuantityOrdered){<form asp-action="Receive" method="post" class="inline-form">
+<input type="hidden" name="id" value="@Model.Id"/>
+<input type="hidden" name="lineId" value="@l.Id"/>
+<input type="number" name="quantity" value="@(l.QuantityOrdered-l.QuantityReceived)" min="1" max="@(l.QuantityOrdered-l.QuantityReceived)"/>
+<button class="btn btn-primary btn-small">Receive</button>
+</form>}else{<span class="status status-success">Complete</span>}</td>
+</tr>}</tbody>
+</table>
+</div>
+</section>

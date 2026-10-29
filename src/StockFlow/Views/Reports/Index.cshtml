@@ -1,5 +1,5 @@
 @model IEnumerable<Product>
-  @{ViewData["Title"]="Reports & exports";}
+@{ViewData["Title"]="Reports & exports";}
   <div class="page-heading">
     <div>
       <h1>Reports & exports</h1>
@@ -8,8 +8,7 @@
       </p>
     </div>
     <a class="btn btn-primary" asp-action="ExportProducts"
-      >Export product CSV</a
-    >
+      >Export product CSV</a>
   </div>
   <div class="metric-grid">
     <article class="metric">
@@ -67,12 +66,15 @@
             <td>@p.Sku</td>
             <td>@p.QuantityOnHand</td>
             <td>@p.ReorderLevel</td>
-            <td><strong>@qty</strong></td>
+            <td>
+<strong>@qty</strong>
+</td>
             <td>
               @((qty*p.CostPrice).ToString("C",System.Globalization.CultureInfo.GetCultureInfo("en-ZA")))
             </td>
           </tr>
-          }@if(!Model.Any(p=>p.QuantityOnHand<=p.ReorderLevel)){
+          }
+@if(!Model.Any(p=>p.QuantityOnHand<=p.ReorderLevel)){
           <tr>
             <td colspan="6">
               <div class="empty-state">
@@ -90,4 +92,3 @@
     total. The suggested quantities are a simple threshold-based recommendation,
     not a statistical forecast.
   </p>
-</Product>

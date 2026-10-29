@@ -9,31 +9,31 @@
   <body>
     <aside class="sidebar">
       <a class="brand" asp-controller="Home" asp-action="Index"
-        ><span class="brand-mark">S</span
-        ><span>StockFlow<small>Inventory & Procurement</small></span></a
-      >
+        >
+<span class="brand-mark">S</span>
+<span>StockFlow<small>Inventory & Procurement</small>
+</span>
+</a>
       <nav>
-        <a asp-controller="Home" asp-action="Index">Dashboard</a
-        ><a asp-controller="Products" asp-action="Index">Inventory</a
-        ><a asp-controller="Purchases" asp-action="Index">Purchase orders</a
-        ><a asp-controller="Suppliers" asp-action="Index">Suppliers</a
-        ><a asp-controller="Sales" asp-action="Index">Sales</a
-        ><a asp-controller="Activity" asp-action="Index">Stock movements</a
-        ><a asp-controller="Reports" asp-action="Index">Reports & exports</a
-        >@if(User.IsInRole("Admin")||User.IsInRole("Manager")){<a
+        <a asp-controller="Home" asp-action="Index">Dashboard</a>
+<a asp-controller="Products" asp-action="Index">Inventory</a>
+<a asp-controller="Purchases" asp-action="Index">Purchase orders</a>
+<a asp-controller="Suppliers" asp-action="Index">Suppliers</a>
+<a asp-controller="Sales" asp-action="Index">Sales</a>
+<a asp-controller="Activity" asp-action="Index">Stock movements</a>
+<a asp-controller="Reports" asp-action="Index">Reports & exports</a>@if(User.IsInRole("Admin")||User.IsInRole("Manager")){<a
           asp-controller="Activity"
           asp-action="Audit"
-          >Audit log</a
-        >}@if(User.IsInRole("Admin")){<a
+          >Audit log</a>}
+@if(User.IsInRole("Admin")){<a
           asp-controller="Admin"
           asp-action="Users"
-          >User management</a
-        >}
+          >User management</a>}
       </nav>
       <div class="sidebar-foot">
-        South African business edition<br /><span
-          >Secure inventory workspace</span
-        >
+        South African business edition<br />
+<span
+          >Secure inventory workspace</span>
       </div>
     </aside>
     <main class="main">
@@ -46,13 +46,12 @@
           ☰
         </button>
         <div>
-          <span class="eyebrow">OPERATIONS / WORKSPACE</span
-          ><strong>@ViewData["Title"]</strong>
+          <span class="eyebrow">OPERATIONS / WORKSPACE</span>
+<strong>@ViewData["Title"]</strong>
         </div>
         <div class="account">
           @if(User.Identity?.IsAuthenticated==true){<span class="user-email"
-            >@User.Identity.Name</span
-          >
+            >@User.Identity.Name</span>
           <form asp-controller="Account" asp-action="Logout" method="post">
             <button class="btn btn-light btn-small">Sign out</button>
           </form>
@@ -60,14 +59,14 @@
             class="btn btn-primary btn-small"
             asp-controller="Account"
             asp-action="Login"
-            >Sign in</a
-          >}
+            >Sign in</a>}
         </div>
       </header>
       <section class="content">
         @if(TempData["Success"]!=null){
         <div class="alert success">@TempData["Success"]</div>
-        }@if(TempData["Error"]!=null){
+        }
+@if(TempData["Error"]!=null){
         <div class="alert error">@TempData["Error"]</div>
         }@RenderBody()
         <footer>
@@ -75,7 +74,8 @@
         </footer>
       </section>
     </main>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true">
+</script>
     @await RenderSectionAsync("Scripts", required: false)
   </body>
 </html>

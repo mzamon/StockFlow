@@ -1,3 +1,48 @@
 @model IEnumerable<ApplicationUser>
 @{ViewData["Title"]="User management";}
-<div class="page-heading"><div><h1>User management</h1><p>Manage access and assign roles according to staff responsibilities.</p></div></div><section class="panel"><div class="table-wrap"><table><thead><tr><th>User</th><th>Created</th><th>Current role</th><th>Account status</th><th>Change role</th><th>Access</th></tr></thead><tbody>@foreach(var u in Model){var roles=ViewContext.HttpContext.RequestServices.GetRequiredService<UserManager<ApplicationUser>>();var r=await roles.GetRolesAsync(u);<tr><td><strong>@u.FullName</strong><small>@u.Email</small></td><td>@u.CreatedAt.ToLocalTime().ToString("dd MMM yyyy")</td><td>@string.Join(", ",r)</td><td><span class="status @(u.IsActive?"status-success":"status-warning")">@(u.IsActive?"Active":"Inactive")</span></td><td><form asp-action="SetRole" method="post" class="inline-form"><input type="hidden" name="id" value="@u.Id"/><select name="role">@foreach(var role in new[]{"Admin","Manager","StockClerk","Procurement","Viewer"}){<option value="@role" selected="@(r.Contains(role))">@role</option>}</select><button class="btn btn-light btn-small">Save</button></form></td><td><form asp-action="ToggleActive" method="post"><input type="hidden" name="id" value="@u.Id"/><button class="btn btn-light btn-small" @(u.Email==User.Identity?.Name?"disabled":"")>@(u.IsActive?"Deactivate":"Activate")</button></form></td></tr>}</tbody></table></div></section>
+<div class="page-heading">
+<div>
+<h1>User management</h1>
+<p>Manage access and assign roles according to staff responsibilities.</p>
+</div>
+</div>
+<section class="panel">
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>User</th>
+<th>Created</th>
+<th>Current role</th>
+<th>Account status</th>
+<th>Change role</th>
+<th>Access</th>
+</tr>
+</thead>
+<tbody>@foreach(var u in Model){var roles=ViewContext.HttpContext.RequestServices.GetRequiredService<UserManager<ApplicationUser>>();var r=await roles.GetRolesAsync(u);<tr>
+<td>
+<strong>@u.FullName</strong>
+<small>@u.Email</small>
+</td>
+<td>@u.CreatedAt.ToLocalTime().ToString("dd MMM yyyy")</td>
+<td>@string.Join(", ",r)</td>
+<td>
+<span class="status @(u.IsActive?"status-success":"status-warning")">@(u.IsActive?"Active":"Inactive")</span>
+</td>
+<td>
+<form asp-action="SetRole" method="post" class="inline-form">
+<input type="hidden" name="id" value="@u.Id"/>
+<select name="role">@foreach(var role in new[]{"Admin","Manager","StockClerk","Procurement","Viewer"}){<option value="@role" selected="@(r.Contains(role))">@role</option>}</select>
+<button class="btn btn-light btn-small">Save</button>
+</form>
+</td>
+<td>
+<form asp-action="ToggleActive" method="post">
+<input type="hidden" name="id" value="@u.Id"/>
+<button class="btn btn-light btn-small" @(u.Email==User.Identity?.Name?"disabled":"")>@(u.IsActive?"Deactivate":"Activate")</button>
+</form>
+</td>
+</tr>}</tbody>
+</table>
+</div>
+</section>
