@@ -8,7 +8,7 @@
   <a class="btn btn-light" asp-action="Index">Back to sales</a>
 </div>
 <section class="panel form-panel narrow">
-  <form method="post">
+  <form asp-action="Create" method="post">
     <div asp-validation-summary="ModelOnly" class="validation">
 </div>
     <label asp-for="CustomerName">Customer name (optional)</label>

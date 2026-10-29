@@ -5,7 +5,8 @@
     <span class="eyebrow">WELCOME BACK</span>
     <h1>Sign in to StockFlow</h1>
     <p class="muted">Access your inventory and procurement workspace.</p>
-    <form method="post">
+    <form asp-action="Login" method="post">
+      <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl" />
       <div asp-validation-summary="ModelOnly" class="validation"></div>
       <label asp-for="Email">Email address</label><input
         asp-for="Email"

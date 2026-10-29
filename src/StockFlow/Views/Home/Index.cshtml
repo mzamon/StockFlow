@@ -5,10 +5,10 @@
 <h1>Good operations start with visibility.</h1>
 <p>Monitor stock health, procurement and sales activity in one place.</p>
 </div>
-<div class="heading-actions">
+@if(User.IsInRole("Admin")||User.IsInRole("Manager")||User.IsInRole("StockClerk")||User.IsInRole("Procurement")){<div class="heading-actions">
 <a class="btn btn-primary" asp-controller="Products" asp-action="Create">Add product</a>
 <a class="btn btn-light" asp-controller="Sales" asp-action="Create">Record sale</a>
-</div>
+</div>}
 </div>
 <div class="metric-grid">
 <article class="metric">

@@ -16,7 +16,7 @@ p=(Product)ViewBag.Product;}
       @p.QuantityOnHand <small>units available</small>
     </div>
   </div>
-  <form method="post">
+  <form asp-action="Adjust" method="post">
     <input asp-for="ProductId" type="hidden" />
     <div asp-validation-summary="ModelOnly" class="validation">
 </div>
