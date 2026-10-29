@@ -234,7 +234,22 @@ Build the solution with:
 dotnet build .\StockFlow.sln
 ```
 
-The current solution has been formatted and verified with a clean build. The project includes application-level validation, but a dedicated automated test project should be added before production use.
+Run the automated tests with:
+
+```powershell
+dotnet test .\StockFlow.sln
+```
+
+The test project is located at `tests/StockFlow.Tests` and currently covers:
+
+- Empty dashboard data for authenticated non-admin users.
+- The maximum four-record dashboard display limit for administrators.
+- CSV quoting and embedded quotation-mark escaping.
+- Rejection of stock adjustments that would create negative inventory.
+
+GitHub Actions runs on every push and pull request using `.github/workflows/dotnet.yml`. The workflow restores dependencies, builds the full solution in Release mode, runs all tests, and uploads the TRX test results as a workflow artifact.
+
+The current solution has been formatted and verified with a clean build and passing automated tests. Additional unit and integration coverage should be added as new business workflows are introduced.
 
 ## Copyright
 
