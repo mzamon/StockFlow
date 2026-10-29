@@ -1,1 +1,28 @@
-(() => { const toggle = document.getElementById('menuToggle'); const sidebar = document.querySelector('.sidebar'); if (toggle && sidebar) { toggle.addEventListener('click', () => sidebar.classList.toggle('open')); document.addEventListener('click', e => { if (window.innerWidth <= 720 && sidebar.classList.contains('open') && !sidebar.contains(e.target) && !toggle.contains(e.target)) sidebar.classList.remove('open'); }); } document.querySelectorAll('form').forEach(form => { form.addEventListener('submit', () => { const button = form.querySelector('button[type="submit"],button:not([type])'); if (button && !button.dataset.noBusy) { button.dataset.originalText = button.textContent; button.textContent = 'Please wait…'; button.disabled = true; } }); }); })();
+(() => {
+  const toggle = document.getElementById("menuToggle");
+  const sidebar = document.querySelector(".sidebar");
+  if (toggle && sidebar) {
+    toggle.addEventListener("click", () => sidebar.classList.toggle("open"));
+    document.addEventListener("click", (e) => {
+      if (
+        window.innerWidth <= 720 &&
+        sidebar.classList.contains("open") &&
+        !sidebar.contains(e.target) &&
+        !toggle.contains(e.target)
+      )
+        sidebar.classList.remove("open");
+    });
+  }
+  document.querySelectorAll("form").forEach((form) => {
+    form.addEventListener("submit", () => {
+      const button = form.querySelector(
+        'button[type="submit"],button:not([type])',
+      );
+      if (button && !button.dataset.noBusy) {
+        button.dataset.originalText = button.textContent;
+        button.textContent = "Please wait…";
+        button.disabled = true;
+      }
+    });
+  });
+})();

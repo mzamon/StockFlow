@@ -1,3 +1,33 @@
-@model CreateSaleVm
-@{ViewData["Title"]="Record sale";}
-<div class="page-heading"><div><h1>Record a sale</h1><p>Available stock is checked before the sale is saved.</p></div><a class="btn btn-light" asp-action="Index">Back to sales</a></div><section class="panel form-panel narrow"><form method="post"><div asp-validation-summary="ModelOnly" class="validation"></div><label asp-for="CustomerName">Customer name (optional)</label><input asp-for="CustomerName"/><label asp-for="ProductId">Product</label><select asp-for="ProductId"><option value="">Choose product</option>@foreach(Product p in ViewBag.Products){<option value="@p.Id">@p.Name — @p.QuantityOnHand available — @p.SellingPrice.ToString("C",System.Globalization.CultureInfo.GetCultureInfo("en-ZA"))</option>}</select><span asp-validation-for="ProductId" class="validation"></span><label asp-for="Quantity">Quantity</label><input asp-for="Quantity" type="number" min="1"/><span asp-validation-for="Quantity" class="validation"></span><div class="form-actions"><a class="btn btn-light" asp-action="Index">Cancel</a><button class="btn btn-primary">Save sale</button></div></form></section>
+@model CreateSaleVm @{ViewData["Title"]="Record sale";}
+<div class="page-heading">
+  <div>
+    <h1>Record a sale</h1>
+    <p>Available stock is checked before the sale is saved.</p>
+  </div>
+  <a class="btn btn-light" asp-action="Index">Back to sales</a>
+</div>
+<section class="panel form-panel narrow">
+  <form method="post">
+    <div asp-validation-summary="ModelOnly" class="validation"></div>
+    <label asp-for="CustomerName">Customer name (optional)</label
+    ><input asp-for="CustomerName" /><label asp-for="ProductId">Product</label
+    ><select asp-for="ProductId">
+      <option value="">Choose product</option>
+      @foreach(Product p in ViewBag.Products){
+      <option value="@p.Id">
+        @p.Name — @p.QuantityOnHand available —
+        @p.SellingPrice.ToString("C",System.Globalization.CultureInfo.GetCultureInfo("en-ZA"))
+      </option>
+      }</select
+    ><span asp-validation-for="ProductId" class="validation"></span
+    ><label asp-for="Quantity">Quantity</label
+    ><input asp-for="Quantity" type="number" min="1" /><span
+      asp-validation-for="Quantity"
+      class="validation"
+    ></span>
+    <div class="form-actions">
+      <a class="btn btn-light" asp-action="Index">Cancel</a
+      ><button class="btn btn-primary">Save sale</button>
+    </div>
+  </form>
+</section>

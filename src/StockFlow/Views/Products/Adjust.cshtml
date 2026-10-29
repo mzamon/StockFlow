@@ -1,3 +1,37 @@
-@model AdjustmentVm
-@{ViewData["Title"]="Adjust stock";Product p=(Product)ViewBag.Product;}
-<div class="page-heading"><div><h1>Adjust stock</h1><p>Every adjustment is written to stock movement history.</p></div><a class="btn btn-light" asp-action="Index">Back to inventory</a></div><section class="panel form-panel narrow"><div class="callout"><strong>@p.Name</strong><span>SKU @p.Sku</span><div class="big-number">@p.QuantityOnHand <small>units available</small></div></div><form method="post"><input asp-for="ProductId" type="hidden"/><div asp-validation-summary="ModelOnly" class="validation"></div><label asp-for="QuantityChange">Quantity change</label><input asp-for="QuantityChange" type="number"/><span class="help">Use a positive number to add stock or a negative number to remove stock.</span><span asp-validation-for="QuantityChange" class="validation"></span><label asp-for="Reason">Reason for adjustment</label><textarea asp-for="Reason" rows="3" placeholder="e.g. Cycle count correction"></textarea><span asp-validation-for="Reason" class="validation"></span><div class="form-actions"><a class="btn btn-light" asp-action="Index">Cancel</a><button class="btn btn-primary">Save adjustment</button></div></form></section>
+@model AdjustmentVm @{ViewData["Title"]="Adjust stock";Product
+p=(Product)ViewBag.Product;}
+<div class="page-heading">
+  <div>
+    <h1>Adjust stock</h1>
+    <p>Every adjustment is written to stock movement history.</p>
+  </div>
+  <a class="btn btn-light" asp-action="Index">Back to inventory</a>
+</div>
+<section class="panel form-panel narrow">
+  <div class="callout">
+    <strong>@p.Name</strong><span>SKU @p.Sku</span>
+    <div class="big-number">
+      @p.QuantityOnHand <small>units available</small>
+    </div>
+  </div>
+  <form method="post">
+    <input asp-for="ProductId" type="hidden" />
+    <div asp-validation-summary="ModelOnly" class="validation"></div>
+    <label asp-for="QuantityChange">Quantity change</label
+    ><input asp-for="QuantityChange" type="number" /><span class="help"
+      >Use a positive number to add stock or a negative number to remove
+      stock.</span
+    ><span asp-validation-for="QuantityChange" class="validation"></span
+    ><label asp-for="Reason">Reason for adjustment</label
+    ><textarea
+      asp-for="Reason"
+      rows="3"
+      placeholder="e.g. Cycle count correction"
+    ></textarea
+    ><span asp-validation-for="Reason" class="validation"></span>
+    <div class="form-actions">
+      <a class="btn btn-light" asp-action="Index">Cancel</a
+      ><button class="btn btn-primary">Save adjustment</button>
+    </div>
+  </form>
+</section>
