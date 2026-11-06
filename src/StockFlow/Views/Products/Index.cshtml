@@ -1,3 +1,63 @@
 @model IEnumerable<Product>
 @{ViewData["Title"]="Inventory";}
-<div class="page-heading"><div><h1>Inventory</h1><p>Manage product information, stock availability and reorder thresholds.</p></div><div class="heading-actions"><a class="btn btn-light" asp-controller="Reports" asp-action="ExportProducts">Export CSV</a>@if(User.IsInRole("Admin")||User.IsInRole("Manager")||User.IsInRole("StockClerk")||User.IsInRole("Procurement")){<a class="btn btn-primary" asp-action="Create">Add product</a>}</div></div><section class="panel"><form class="filters" method="get"><input name="q" value="@ViewBag.Query" placeholder="Search product, SKU or barcode"/><select name="category"><option value="">All categories</option>@foreach(string c in (IEnumerable<string>)ViewBag.Categories){<option value="@c" selected="@(c==(string?)ViewBag.Category)">@c</option>}</select><label class="check-row"><input type="checkbox" name="lowOnly" value="true" checked="@(ViewBag.LowOnly==true)"/> Low stock only</label><button class="btn btn-primary">Apply filters</button><a class="btn btn-light" asp-action="Index">Reset</a></form><div class="table-wrap"><table><thead><tr><th>Product</th><th>SKU / Barcode</th><th>Category</th><th>Cost price</th><th>Selling price</th><th>On hand</th><th>Status</th><th>Actions</th></tr></thead><tbody>@foreach(var p in Model){<tr><td><strong>@p.Name</strong><small>@(p.Description??"")</small></td><td>@p.Sku<small>@p.Barcode</small></td><td>@p.Category</td><td>@p.CostPrice.ToString("C",System.Globalization.CultureInfo.GetCultureInfo("en-ZA"))</td><td>@p.SellingPrice.ToString("C",System.Globalization.CultureInfo.GetCultureInfo("en-ZA"))</td><td><strong>@p.QuantityOnHand</strong><small>Reorder at @p.ReorderLevel</small></td><td><span class="status @(p.QuantityOnHand<=p.ReorderLevel?"status-warning":p.IsActive?"status-success":"status-muted")">@(p.QuantityOnHand<=p.ReorderLevel?"Low stock":p.IsActive?"In stock":"Inactive")</span></td><td class="actions"><a class="btn btn-light btn-small" asp-action="Edit" asp-route-id="@p.Id">Edit</a>@if(User.IsInRole("Admin")||User.IsInRole("Manager")||User.IsInRole("StockClerk")){<a class="btn btn-light btn-small" asp-action="Adjust" asp-route-id="@p.Id">Adjust</a>}</td></tr>}@if(!Model.Any()){<tr><td colspan="8"><div class="empty-state">No products match your filters. Add a product to get started.</div></td></tr>}</tbody></table></div><div class="table-footer">Showing @Model.Count() item(s)</div></section>
+<div class="page-heading">
+<div>
+<h1>Inventory</h1>
+<p>Manage product information, stock availability and reorder thresholds.</p>
+</div>
+<div class="heading-actions">
+<a class="btn btn-light" asp-controller="Reports" asp-action="ExportProducts">Export CSV</a>@if(User.IsInRole("Admin")||User.IsInRole("Manager")||User.IsInRole("StockClerk")||User.IsInRole("Procurement")){<a class="btn btn-primary" asp-action="Create">Add product</a>}</div>
+</div>
+<section class="panel">
+<form class="filters" method="get">
+<input name="q" value="@ViewBag.Query" placeholder="Search product, SKU or barcode"/>
+<select name="category">
+<option value="">All categories</option>@foreach(string c in (IEnumerable<string>)ViewBag.Categories){<option value="@c" selected="@(c==(string?)ViewBag.Category)">@c</option>}</select>
+<label class="check-row">
+<input type="checkbox" name="lowOnly" value="true" checked="@(ViewBag.LowOnly==true)"/> Low stock only</label>
+<button class="btn btn-primary">Apply filters</button>
+<a class="btn btn-light" asp-action="Index">Reset</a>
+</form>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Product</th>
+<th>SKU / Barcode</th>
+<th>Category</th>
+<th>Cost price</th>
+<th>Selling price</th>
+<th>On hand</th>
+<th>Status</th>
+<th>Actions</th>
+</tr>
+</thead>
+<tbody>@foreach(var p in Model){<tr>
+<td>
+<strong>@p.Name</strong>
+<small>@(p.Description??"")</small>
+</td>
+<td>@p.Sku<small>@p.Barcode</small>
+</td>
+<td>@p.Category</td>
+<td>@p.CostPrice.ToString("C",System.Globalization.CultureInfo.GetCultureInfo("en-ZA"))</td>
+<td>@p.SellingPrice.ToString("C",System.Globalization.CultureInfo.GetCultureInfo("en-ZA"))</td>
+<td>
+<strong>@p.QuantityOnHand</strong>
+<small>Reorder at @p.ReorderLevel</small>
+</td>
+<td>
+<span class="status @(p.QuantityOnHand<=p.ReorderLevel?"status-warning":p.IsActive?"status-success":"status-muted")">@(p.QuantityOnHand<=p.ReorderLevel?"Low stock":p.IsActive?"In stock":"Inactive")</span>
+</td>
+<td class="actions">
+<a class="btn btn-light btn-small" asp-action="Edit" asp-route-id="@p.Id">Edit</a>@if(User.IsInRole("Admin")||User.IsInRole("Manager")||User.IsInRole("StockClerk")){<a class="btn btn-light btn-small" asp-action="Adjust" asp-route-id="@p.Id">Adjust</a>}</td>
+</tr>}
+@if(!Model.Any()){<tr>
+<td colspan="8">
+<div class="empty-state">No products match your filters. Add a product to get started.</div>
+</td>
+</tr>}</tbody>
+</table>
+</div>
+<div class="table-footer">Showing @Model.Count() item(s)</div>
+</section>

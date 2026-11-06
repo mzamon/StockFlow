@@ -1,3 +1,45 @@
 @model IEnumerable<StockMovement>
 @{ViewData["Title"]="Stock movements";}
-<div class="page-heading"><div><h1>Stock movement history</h1><p>Auditable history of every opening balance, sale, receipt and adjustment.</p></div></div><section class="panel"><form class="filters" method="get"><input name="q" value="@ViewBag.Query" placeholder="Search product, reference or reason"/><button class="btn btn-primary">Search</button></form><div class="table-wrap"><table><thead><tr><th>Date</th><th>Product</th><th>Movement</th><th>Change</th><th>Balance after</th><th>Reference</th><th>Reason</th><th>Performed by</th></tr></thead><tbody>@foreach(var m in Model){<tr><td>@m.CreatedAt.ToLocalTime().ToString("dd MMM yyyy HH:mm")</td><td>@m.Product?.Name</td><td>@m.Type</td><td class="@(m.QuantityChange<0?"negative":"positive")">@(m.QuantityChange>0?"+":"")@m.QuantityChange</td><td>@m.BalanceAfter</td><td>@m.Reference</td><td>@m.Reason</td><td>@m.PerformedBy</td></tr>}@if(!Model.Any()){<tr><td colspan="8"><div class="empty-state">No movements found.</div></td></tr>}</tbody></table></div></section>
+<div class="page-heading">
+<div>
+<h1>Stock movement history</h1>
+<p>Auditable history of every opening balance, sale, receipt and adjustment.</p>
+</div>
+</div>
+<section class="panel">
+<form class="filters" method="get">
+<input name="q" value="@ViewBag.Query" placeholder="Search product, reference or reason"/>
+<button class="btn btn-primary">Search</button>
+</form>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Date</th>
+<th>Product</th>
+<th>Movement</th>
+<th>Change</th>
+<th>Balance after</th>
+<th>Reference</th>
+<th>Reason</th>
+<th>Performed by</th>
+</tr>
+</thead>
+<tbody>@foreach(var m in Model){<tr>
+<td>@m.CreatedAt.ToLocalTime().ToString("dd MMM yyyy HH:mm")</td>
+<td>@m.Product?.Name</td>
+<td>@m.Type</td>
+<td class="@(m.QuantityChange<0?"negative":"positive")">@(m.QuantityChange>0?"+":"")@m.QuantityChange</td>
+<td>@m.BalanceAfter</td>
+<td>@m.Reference</td>
+<td>@m.Reason</td>
+<td>@m.PerformedBy</td>
+</tr>}
+@if(!Model.Any()){<tr>
+<td colspan="8">
+<div class="empty-state">No movements found.</div>
+</td>
+</tr>}</tbody>
+</table>
+</div>
+</section>
